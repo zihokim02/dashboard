@@ -1,4 +1,6 @@
-export default function ProjectView({ project, onEdit, onDelete, onBack, onUpdateTask }) {
+import { useState } from 'react';
+
+export default function ProjectView({ project, onEdit, onDelete, onBack, onUpdateTask, onAddNextStep, onToggleNextStep, onDeleteNextStep }) {
   const totalTasks = project.tasks.length;
   const doneTasks = project.tasks.filter(t => t.status === 'done').length;
   const progress = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
@@ -55,18 +57,104 @@ export default function ProjectView({ project, onEdit, onDelete, onBack, onUpdat
         </div>
       </div>
 
-      {/* Tasks */}
-      <h3 className="text-lg font-semibold text-white/90 mb-4">Tasks ({doneTasks}/{totalTasks})</h3>
-      <div className="space-y-3">
-        {project.tasks.map(task => (
-          <TaskRow 
-            key={task.id} 
-            task={task} 
-            onUpdate={() => onUpdateTask(task.id, statusCycle[task.status])} 
+      {/* Two Column Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Tasks Column */}
+        <div>
+          <h3 className="text-lg font-semibold text-white/90 mb-4">Tasks ({doneTasks}/{totalTasks})</h3>
+          <div className="space-y-3">
+            {project.tasks.map(task => (
+              <TaskRow 
+                key={task.id} 
+                task={task} 
+                onUpdate={() => onUpdateTask(task.id, statusCycle[task.status])} 
+              />
+            ))}
+            {project.tasks.length === 0 && (
+              <p className="text-white/40 text-sm italic">No tasks yet.</p>
+            )}
+          </div>
+        </div>
+
+        {/* Next Steps Column */}
+        <div>
+          <NextStepsList 
+            steps={project.nextSteps || []} 
+            onAdd={onAddNextStep}
+            onToggle={onToggleNextStep}
+            onDelete={onDeleteNextStep}
           />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function NextStepsList({ steps, onAdd, onToggle, onDelete }) {
+  const [newStep, setNewStep] = useState('');
+  const doneCount = steps.filter(s => s.done).length;
+
+  function handleAdd(e) {
+    e.preventDefault();
+    if (!newStep.trim()) return;
+    onAdd(newStep.trim());
+    setNewStep('');
+  }
+
+  return (
+    <div className="glass-card p-5">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-lg font-semibold text-white/90">Next Steps ({doneCount}/{steps.length})</h3>
+      </div>
+
+      {/* Add Step Input */}
+      <form onSubmit={handleAdd} className="flex gap-2 mb-4">
+        <input
+          type="text"
+          value={newStep}
+          onChange={e => setNewStep(e.target.value)}
+          placeholder="Add a next step..."
+          className="flex-1 glass-input px-4 py-2 text-sm"
+        />
+        <button type="submit" className="glass-button px-4 py-2 text-sm font-medium">
+          Add
+        </button>
+      </form>
+
+      {/* Steps List */}
+      <div className="space-y-2">
+        {steps.map(step => (
+          <div
+            key={step.id}
+            className={`flex items-center gap-3 glass-input px-3 py-2.5 transition-all ${
+              step.done ? 'opacity-50' : ''
+            }`}
+          >
+            <button
+              onClick={() => onToggle(step.id)}
+              className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all ${
+                step.done 
+                  ? 'bg-white/20 border-white/30' 
+                  : 'border-white/20 hover:border-white/40'
+              }`}
+            >
+              {step.done && <span className="text-white/80 text-xs">✓</span>}
+            </button>
+            <span className={`flex-1 text-sm ${step.done ? 'line-through text-white/40' : 'text-white/80'}`}>
+              {step.title}
+            </span>
+            <button
+              onClick={() => onDelete(step.id)}
+              className="text-white/30 hover:text-white/60 text-sm px-2 py-1 rounded hover:bg-white/10 transition-all"
+            >
+              ✕
+            </button>
+          </div>
         ))}
-        {project.tasks.length === 0 && (
-          <p className="text-white/40 text-sm italic">No tasks yet.</p>
+        {steps.length === 0 && (
+          <p className="text-white/40 text-sm italic text-center py-4">
+            No next steps yet. Add one above!
+          </p>
         )}
       </div>
     </div>

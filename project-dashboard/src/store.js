@@ -16,6 +16,10 @@ const defaultData = {
         { id: 't3', title: 'Analysis', status: 'todo' },
         { id: 't4', title: 'Write report', status: 'todo' },
       ],
+      nextSteps: [
+        { id: 'ns1', title: 'Review collected data', done: false },
+        { id: 'ns2', title: 'Prepare presentation slides', done: false },
+      ],
       createdAt: Date.now(),
     },
     {
@@ -33,6 +37,12 @@ const defaultData = {
         { id: 't8', title: 'Add Gantt chart', status: 'todo' },
         { id: 't9', title: 'Testing', status: 'todo' },
       ],
+      nextSteps: [
+        { id: 'ns3', title: 'Create GitHub account', done: true },
+        { id: 'ns4', title: 'Create Vercel account', done: true },
+        { id: 'ns5', title: 'Push project to GitHub', done: false },
+        { id: 'ns6', title: 'Deploy to Vercel', done: false },
+      ],
       createdAt: Date.now(),
     },
   ],
@@ -41,7 +51,15 @@ const defaultData = {
 export function loadData() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const data = JSON.parse(raw);
+      // Migrate old projects without nextSteps
+      data.projects = data.projects.map(p => ({
+        ...p,
+        nextSteps: p.nextSteps || [],
+      }));
+      return data;
+    }
   } catch (e) { /* ignore */ }
   return defaultData;
 }
