@@ -47,7 +47,8 @@ export default function Dashboard({ projects, onOpenProject }) {
           <select
             value={typeFilter}
             onChange={e => setTypeFilter(e.target.value)}
-            className="glass-input px-4 py-2.5 text-sm min-w-[120px]"
+            className="glass-input pl-4 pr-8 py-2.5 text-sm min-w-[120px] appearance-none bg-no-repeat bg-right"
+            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%23ffffff60' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E")`, backgroundPosition: 'right 0.5rem center', backgroundSize: '1rem' }}
           >
             <option value="all" className="bg-neutral-900">All Types</option>
             <option value="research" className="bg-neutral-900">Research</option>
@@ -56,7 +57,8 @@ export default function Dashboard({ projects, onOpenProject }) {
           <select
             value={statusFilter}
             onChange={e => setStatusFilter(e.target.value)}
-            className="glass-input px-4 py-2.5 text-sm min-w-[140px]"
+            className="glass-input pl-4 pr-8 py-2.5 text-sm min-w-[140px] appearance-none bg-no-repeat bg-right"
+            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%23ffffff60' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E")`, backgroundPosition: 'right 0.5rem center', backgroundSize: '1rem' }}
           >
             <option value="all" className="bg-neutral-900">All Statuses</option>
             <option value="not-started" className="bg-neutral-900">Not Started</option>
