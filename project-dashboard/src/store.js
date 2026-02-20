@@ -40,8 +40,8 @@ const defaultData = {
       nextSteps: [
         { id: 'ns3', title: 'Create GitHub account', done: true },
         { id: 'ns4', title: 'Create Vercel account', done: true },
-        { id: 'ns5', title: 'Push project to GitHub', done: false },
-        { id: 'ns6', title: 'Deploy to Vercel', done: false },
+        { id: 'ns5', title: 'Push project to GitHub', done: true },
+        { id: 'ns6', title: 'Deploy to Vercel', done: true },
       ],
       createdAt: Date.now(),
     },
