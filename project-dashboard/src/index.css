@@ -105,6 +105,17 @@ body {
   box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
 }
 
+/* Hide native select arrow - custom arrow only */
+select.glass-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+select.glass-input::-ms-expand {
+  display: none;
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;
