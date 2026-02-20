@@ -11,9 +11,9 @@ export default function ProjectView({ project, onEdit, onDelete, onBack, onUpdat
     <div>
       <button 
         onClick={onBack} 
-        className="text-white/50 hover:text-white text-sm mb-4 inline-flex items-center gap-1 transition-colors"
+        className="text-white/50 hover:text-white text-sm mb-4 inline-flex items-center gap-1 transition-colors pl-0"
       >
-        ← Back to Dashboard
+        <span className="inline-block -ml-1">←</span> Back to Dashboard
       </button>
 
       <div className="glass-card p-6 mb-6">

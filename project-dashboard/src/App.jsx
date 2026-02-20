@@ -107,7 +107,7 @@ export default function App() {
           className="text-xl font-semibold text-white cursor-pointer tracking-tight"
           onClick={() => setView(VIEWS.DASHBOARD)}
         >
-          <span className="mr-2">📊</span>Projects
+          Dashboard
         </h1>
         <div className="flex gap-2 ml-auto">
           <NavBtn active={view === VIEWS.DASHBOARD} onClick={() => setView(VIEWS.DASHBOARD)}>Overview</NavBtn>
