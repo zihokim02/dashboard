@@ -116,6 +116,23 @@ select.glass-input::-ms-expand {
   display: none;
 }
 
+/* Select dropdown options styling */
+select.glass-input option {
+  background: rgba(30, 30, 30, 0.95);
+  color: #f5f5f7;
+  padding: 8px 12px;
+}
+
+select.glass-input option:hover,
+select.glass-input option:focus {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Firefox dropdown styling */
+select.glass-input optgroup {
+  background: rgba(30, 30, 30, 0.95);
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;
