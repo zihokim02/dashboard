@@ -1,0 +1,5 @@
+{
+  "active": false,
+  "hours": "10am-12am",
+  "notes": "Running on Claude 3 Haiku (the real cheap one: $0.25/$1.25 per M). Set active:false to pause."
+}
