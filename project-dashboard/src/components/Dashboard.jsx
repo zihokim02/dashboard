@@ -134,9 +134,6 @@ function ProjectCard({ project, onClick }) {
   const inProgressTasks = project.tasks.filter(t => t.status === 'in-progress').length;
   const progress = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
 
-  const nextSteps = project.nextSteps || [];
-  const pendingSteps = nextSteps.filter(s => !s.done).length;
-
   const typeColors = {
     research: 'bg-white/10 text-white/70 border-white/15',
     development: 'bg-white/10 text-white/70 border-white/15',
@@ -171,7 +168,6 @@ function ProjectCard({ project, onClick }) {
       <div className="flex gap-3 mb-4 text-xs flex-wrap">
         <span className="text-white/40">📋 {totalTasks} tasks</span>
         {inProgressTasks > 0 && <span className="text-white/60">🔄 {inProgressTasks} active</span>}
-        {pendingSteps > 0 && <span className="text-white/70">📌 {pendingSteps} next</span>}
         {daysLeft !== null && daysLeft > 0 && (
           <span className={daysLeft < 7 ? 'text-white/70' : 'text-white/40'}>
             ⏰ {daysLeft}d left

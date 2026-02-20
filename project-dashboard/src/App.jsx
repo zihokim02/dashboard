@@ -23,7 +23,7 @@ export default function App() {
   function addProject(project) {
     setData(prev => ({
       ...prev,
-      projects: [...prev.projects, { ...project, id: generateId(), createdAt: Date.now(), nextSteps: [] }],
+      projects: [...prev.projects, { ...project, id: generateId(), createdAt: Date.now() }],
     }));
     setView(VIEWS.DASHBOARD);
   }
@@ -55,45 +55,6 @@ export default function App() {
         return {
           ...p,
           tasks: p.tasks.map(t => t.id === taskId ? { ...t, status: newStatus } : t),
-        };
-      }),
-    }));
-  }
-
-  function addNextStep(projectId, title) {
-    setData(prev => ({
-      ...prev,
-      projects: prev.projects.map(p => {
-        if (p.id !== projectId) return p;
-        return {
-          ...p,
-          nextSteps: [...p.nextSteps, { id: generateId(), title, done: false }],
-        };
-      }),
-    }));
-  }
-
-  function toggleNextStep(projectId, stepId) {
-    setData(prev => ({
-      ...prev,
-      projects: prev.projects.map(p => {
-        if (p.id !== projectId) return p;
-        return {
-          ...p,
-          nextSteps: p.nextSteps.map(s => s.id === stepId ? { ...s, done: !s.done } : s),
-        };
-      }),
-    }));
-  }
-
-  function deleteNextStep(projectId, stepId) {
-    setData(prev => ({
-      ...prev,
-      projects: prev.projects.map(p => {
-        if (p.id !== projectId) return p;
-        return {
-          ...p,
-          nextSteps: p.nextSteps.filter(s => s.id !== stepId),
         };
       }),
     }));
@@ -132,9 +93,6 @@ export default function App() {
             onDelete={() => deleteProject(selectedProject.id)}
             onBack={() => setView(VIEWS.DASHBOARD)}
             onUpdateTask={(taskId, status) => updateTaskStatus(selectedProject.id, taskId, status)}
-            onAddNextStep={(title) => addNextStep(selectedProject.id, title)}
-            onToggleNextStep={(stepId) => toggleNextStep(selectedProject.id, stepId)}
-            onDeleteNextStep={(stepId) => deleteNextStep(selectedProject.id, stepId)}
           />
         )}
         {view === VIEWS.NEW_PROJECT && (
